@@ -2,7 +2,7 @@
 return {
     {
     -- Remember last edited line
-    'ethanholz/nvim-lastplace', 
+    'ethanholz/nvim-lastplace',
     lazy = false,
     },
 }
