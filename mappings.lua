@@ -4,25 +4,177 @@
 -- lower level configuration and more robust one. (which-key will
 -- automatically pick-up stored data by this setting.)
 return {
-  -- first key is the mode
   n = {
     -- second key is the lefthand side of the map
     -- mappings seen under group name "Buffer"
-    ["<leader>bn"] = { "<cmd>tabnew<cr>", desc = "New tab" },
-    ["<leader>bD"] = {
-      function()
-        require("astronvim.utils.status").heirline.buffer_picker(function(bufnr) require("astronvim.utils.buffer").close(bufnr) end)
-      end,
-      desc = "Pick to close",
-    },
-    -- tables with the `name` key will be registered with which-key if it's installed
-    -- this is useful for naming menus
-    ["<leader>b"] = { name = "Buffers" },
+    ["<Home>"] = { "^", desc = 'Jump to first non-blank char' },
+    ["<End>"] = { "g_", desc = 'Jump to last non-blank char' },
+    ["<C-PageUp>"] = { "<C-u>", desc = "PageUp center" },
+    ["<C-PageDown>"] = { "<C-d>", desc = "PageDown center" },
+    ["<PageUp>"] = { "10k", desc = "Jump 5 up" },
+    ["<PageDown>"] = { "10j", desc = "Jump 5 down" },
+    -- ["<PageUp>"] = { "<C-u>zz", desc = "PageUp center" },
+    -- ["<PageDown>"] = { "<C-d>zz", desc = "PageDown center" },
+    --["n"] = {"nzz", desc = 'Next search + center'},
+    --["N"] = {"Nzz", desc = 'Next search + center'},
+    ["<leader>gl"] = { "<cmd>Git blame<cr>", desc = "Git linewise blame" },
+    ["<leader>bb"] = { "<cmd>tabnew<cr>", desc = "New tab" },
+    ["<leader>bc"] = { "<cmd>BufferLinePickClose<cr>", desc = "Pick to close" },
+    ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
+    ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
+    ["<leader>bo"] = { '<cmd>%bd|e#|bd#<cr><cr>', desc = "Close other tabs" },
+    -- ["<leader>bu"] = { '<cmd>MundoToggle<cr>', desc = "Buffer undo tree" },
+    ["<leader>bu"] = { '<cmd>Telescope undo<cr>', desc = "Buffer undo tree" },
+    ["<leader>lc"] = { '<cmd>call Autoflake()<cr>', desc = "Clean PyImports" },
+    ["<leader>lp"] = { '<Plug>(pydocstring)', desc = 'PyDocString Gen' },
+    ["<leader>sm"] = { function() require("telescope.builtin").man_pages({ sections = { "ALL" } }) end, desc =
+    "Search man" },
+    -- Disable Force close buffer! No save, no undo history!
+    ["<leader>C"] = false,
+
     -- quick save
-    -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
+    ["<C-s>"] = { ":w!<cr>", desc = "Save File" }, -- change description but the same command
+    ["<C-Right>"] = { "<cmd>bnext<cr>", desc = "Next buffer" },
+    ["<C-Left>"] = { "<cmd>bprev<cr>", desc = "Prev buffer" },
+
+    -- Shift + Arrow selection (+ seamless TMUX panes!)
+    -- ["<S-Up>"] = { "<C-W>k", desc = 'Split move up' },
+    -- ["<S-Down>"] = { "<C-W>j", desc = 'Split move down' },
+    -- ["<S-Left>"] = { "<C-W>h", desc = 'Split move left' },
+    -- ["<S-Right>"] = { "<C-W>l", desc = 'Split move right' },
+    ["<S-Up>"] = { ":<C-U>TmuxNavigateUp<cr>", desc = 'Split move up' },
+    ["<S-Down>"] = { ":<C-U>TmuxNavigateDown<cr>", desc = 'Split move down' },
+    ["<S-Left>"] = { ":<C-U>TmuxNavigateLeft<cr>", desc = 'Split move left' },
+    ["<S-Right>"] = { ":<C-U>TmuxNavigateRight<cr>", desc = 'Split move right' },
+    -- Reserved for TMUX window navigation
+    ["<S-Home>"] = { '<Nop>' },
+    ["<S-End>"] = { '<Nop>' },
+
+    -- Make mouse scroll slower because I have already 3x speed!
+    ["<ScrollWheelUp>"] = { '<C-Y>' },
+    ["<ScrollWheelDown>"] = { '<C-E>' },
+
+    -- TODO: learn how to do without this stuff
+    --["<S-Up>"] = { "V<Up>", desc = 'Select up' },
+    --["<S-Down>"] = { "V<Down>", desc = 'Select down' },
+    -- ["<S-Left>"] = { "v<Left>", desc = 'Select left' },
+    -- ["<S-Right>"] = { "v<Right>", desc = 'Select right' },
+    -- ["<S-Home>"] = { "v^", desc = 'Select to a beginning' },
+    -- ["<S-End>"] = { "v$", desc = 'Select to an end' },
+
+    -- Move lines of code
+    ["<C-Up>"] = { "<cmd>m .-2<CR>==", desc = "Move line Up" },
+    ["<C-Down>"] = { "<cmd>m .+1<CR>==", desc = "Move line Down" },
+
+    -- My pycharm mimics
+    ["<C-q>"] = { vim.lsp.buf.signature_help, desc = 'Select right' },
+    ["<C-d>"] = {
+      function()
+        local aerial_avail, _ = pcall(require, "aerial")
+        if aerial_avail then
+          require("telescope").extensions.aerial.aerial()
+        else
+          require("telescope.builtin").lsp_document_symbols()
+        end
+      end,
+      desc = "Search symbols",
+    },
+    -- Comment with Ctrl+/
+    ["<C-_>"] = { function() require("Comment.api").toggle.linewise.current() end,
+      desc = "Comment line" },
+
+    -- Code navigation
+    -- IMPORTANT: Ctrl-i is a terminal TAB, no way to remap properly
+    --           use ctrl-u to goto between jumps, ctrl+o remains the same
+    ["<C-Home>"] = { "<tab>", desc = 'Jump previous' },
+    ["<C-End>"] = { "<C-o>", desc = 'Jump next' },
+    --["<C-u>"] = { "<tab>", desc = 'Jump previous' },
+
+    --Code idents single line
+    ["<Tab>"] = { ">>", desc = "Indent left" },
+    ["<S-Tab>"] = { "<<", desc = "Indent right" }, -- Shift + Arrow selection
+    ['<leader>zr'] = { ":.,$s/<C-R><C-W>/<C-R><C-W>/gc<Left><Left><Left>", desc = 'Replace current word' },
+    ['<leader>zf'] = { "/<C-R><C-W><CR>", desc = 'Find current word' },
+    ['<leader>zz'] = { "zfif", desc = 'Fold current fuction' },
+    ['<leader>zp'] = { "`[v`]", desc = 'Select pasted text' },
+
+    -- TODO Search
+    ['<leader>ft'] = { ":TodoTelescope keywords=TODO,FIX,BUG,FIXME<CR>", desc = 'Find TODOs' },
+    ['<C-j>'] = { '<Nop>' },
+    ['<C-l>'] = { '<Nop>' },
+    ['J'] = { '<Nop>' },
+    ['K'] = { '<Nop>' },
+    ['L'] = { '<Nop>' },
+    ['H'] = { '<Nop>' },
+    ['<C-u>'] = { '<Nop>' },
+    ['<C-o>'] = { '<Nop>' },
+    ['<C-h>'] = { '<Nop>' },
+    ['<C-y>'] = { '<Nop>' },
+    ['G'] = { 'Gzz' },
+    ['za'] = { 'zazz' },
+    ['zc'] = { 'zczz' },
+    ['zm'] = { 'zmzz' },
+
+    -- FOLDING shortcut
+    ['z`'] = { '<cmd>set foldlevel=0<CR>' },
+    ['z1'] = { '<cmd>set foldlevel=1<CR>' },
+    ['z2'] = { '<cmd>set foldlevel=2<CR>' },
+    ['z3'] = { '<cmd>set foldlevel=3<CR>' },
+    --['U'] = {'<Nop>'},
+    --['O'] = {'<Nop>'},
+
   },
   t = {
     -- setting a mapping to false will disable it
     -- ["<esc>"] = false,
   },
+  i = {
+    -- Shift+Arrows selection
+    ["<S-Up>"] = { "<Esc>V<Up>", desc = 'Select up' },
+    ["<S-Down>"] = { "<Esc>V<Down>", desc = 'Select down' },
+    -- ["<S-Left>"] = { "<Esc>v<Left>", desc = 'Select left' },
+    -- ["<S-Right>"] = { "<Esc>v<Right>", desc = 'Select right' },
+    ["<Home>"] = { "<Esc>^i", desc = 'Jump first valid text' },
+    ["<End>"] = { "<Esc>g_a", desc = 'Jump last valid text' },
+    --["<C-q>"] = { vim.lsp.buf.signature_help, desc = 'Select right' },
+    -- ["<S-Home>"] = { "<Esc>v^", desc = 'Select to a beginning' },
+    -- ["<S-End>"] = { "<Esc>v$", desc = 'Select to an end' },
+    ["<C-s>"] = { "<Esc>:w!<cr>", desc = "Save File" }, -- change description but the same command
+
+    ['<C-j>'] = { '<Nop>' },
+    ['<C-l>'] = { '<Nop>' },
+
+  },
+  v = {
+    -- Visual mode
+    ["<Tab>"] = { ">gv", desc = "Indent left" },
+    ["<S-Tab>"] = { "<gv", desc = "Indent right" }, -- Shift + Arrow selection
+    --["<S-Up>"] = { "5k", desc = 'Select up' },
+    --["<S-Down>"] = { "5j", desc = 'Select down' },
+    ["<S-Up>"] = { "<Up>", desc = 'Select up' },
+    ["<S-Down>"] = { "<Down>", desc = 'Select down' },
+    ["<S-Left>"] = { "<Left>", desc = 'Select left' },
+    ["<S-Right>"] = { "<Right>", desc = 'Select right' },
+    -- Replace PgUp/Dn
+    ["<C-PageUp>"] = { "<C-u>", desc = "PageUp center" },
+    ["<C-PageDown>"] = { "<C-d>", desc = "PageDown center" },
+    ["<PageUp>"] = { "10k", desc = "Jump 5 up" },
+    ["<PageDown>"] = { "10j", desc = "Jump 5 down" },
+    -- Move lines
+    ["<C-Up>"] = { ":m '<-2<CR><CR>gv=gv", desc = "Move Block Up" },
+    ["<C-Down>"] = { ":m '>+1<CR><CR>gv=gv", desc = "Move Block Down" },
+
+    ['<leader>zr'] = { "y:.,$s/<C-R>\"/<C-R>\"/gc<Left><Left><Left>", desc = 'Replace current word' },
+    ['<leader>zf'] = { "y/<C-R>\"<CR>", desc = 'Find selected text' },
+
+    -- Comment with Ctrl+/
+    ["<C-_>"] = {
+      "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>",
+      desc = "Toggle comment line",
+    },
+    ['<C-j>'] = { '<Nop>' },
+    ['<C-l>'] = { '<Nop>' },
+    ['J'] = { '<Nop>' },
+    ['L'] = { '<Nop>' },
+  }
 }
