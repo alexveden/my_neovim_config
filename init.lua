@@ -69,6 +69,12 @@ return {
   -- augroups/autocommands and custom filetypes also this just pure lua so
   -- anything that doesn't fit in the normal config locations above can go here
   polish = function()
+      -- Preventing insert mode cursor changing colors depending on code colorins
+      vim.api.nvim_exec("hi iCursor guifg=#282c34 guibg=white", true)
+      
+    -- Folded text highlighting
+      vim.api.nvim_exec("hi Folded guifg=#ffffff", true)
+
     -- Set up custom filetypes
     -- vim.filetype.add {
     --   extension = {
