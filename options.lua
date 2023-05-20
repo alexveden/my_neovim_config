@@ -11,7 +11,7 @@ return {
     shiftwidth = 4,        -- Ident width when >>
     expandtab = true,      -- Convert tab to spaces
     smarttab = true,
-    guicursor = "i-ci:ver30-iCursor-blinkwait300-blinkon200-blinkoff150"
+    guicursor = "i-ci:ver30-iCursor-blinkwait300-blinkon200-blinkoff150",
   },
   g = {
     mapleader = " ",                 -- sets vim.g.mapleader
