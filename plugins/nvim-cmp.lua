@@ -1,3 +1,8 @@
+local function has_words_before()
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
+end
+
 return {
 { -- override nvim-cmp plugin
       "hrsh7th/nvim-cmp",
@@ -10,6 +15,27 @@ return {
         -- modify the mapping part of the table
         opts.mapping['<C-PageUp>'] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" })
         opts.mapping['<C-PageDown>'] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" })
+        
+        -- Prevent jumps on Tab (annoying when python indent)
+        opts.mapping["<Tab>"] = cmp.mapping(function(fallback)
+                    local luasnip = require("luasnip")
+                    if luasnip.in_snippet() then
+                        if luasnip.expandable() then
+                            luasnip.expand()
+                        elseif luasnip.expand_or_locally_jumpable() then
+                            luasnip.expand_or_jump()
+                        end
+                    elseif cmp.visible() then
+                        cmp.select_next_item()
+                    elseif has_words_before() then
+                        cmp.complete()
+                    else
+                        fallback()
+                    end
+                end, {
+                    "i",
+                    "s",
+                })
 
 
         opts.sorting = {
