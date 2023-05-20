@@ -1,0 +1,118 @@
+test_variable_okkk =  
+test.ruvvan
+RestClassSnake
+test:
+UPPERlower
+_private_method
+ woer
+33
+ fun(a, ba='sad but true'  , c)
+ fun(a=c, z= 430, y=False)
+ f(a,
+   b,
+   b= foo(ax, 3))
+fund(a, another(fund, 2), 2)
+fund(
+    a=Test.ok,
+    )
+f( )
+foo(a,v,c)
+
+    self.save('mktMA',
+              market_conviction * 2,
+              description=f'QM.IDX.^RUGLOBAL price is ' + ('rising (Px > 12w MA)' if market_conviction > 0 else 'falling (Px < 12w MA)'),
+              qm_ty__pe=QMType.intermarket,
+              underlyi77ng=smartbeta_tickers['EQUITY_RU'])
+    test_text_obj_a(f(a,b,c), 1, 'a,')
+    test_text_obj_a(f( a,b,c), 1, 'a,')
+    test_text_obj_a(f(a,b,c), 2, 'a,')
+    test_text_obj_a(f(a,b,c), 3, 'b,')
+    test_text_obj_a(f(a,b,, 3, 'b,')
+    test_text_obj_a(f(a,b,c), 5, 'c')
+    test_text_obj_a(f(a,b,c ), 5, 'c ')
+    test_text_obj_a(f(a,b,c), 6, 'c')
+    test_text_obj_a(f(a,b,c), 7, 'c')
+    test_text_obj_a(  a,b,c), 1, 'a,')
+    test_text_obj_a(f(a,  b,c), 3, 'b,')
+    test_text_obj_a(  a='',b,c), 1, a='',)
+    test_text_obj_a(  a='',, 1, a='',)
+    test_text_obj_a(  a=',',b,c), 1, a=',',)
+    test_text_obj_a(f(  foo(a,b),b,c), 1, foo(a,b),)
+    test_text_obj_a(f(a,  [1, 2, 3] ,c), 3, '[1, 2, 3] ,')
+    test_text_obj_a(f(a,  [1, 2, 3] ,c), 6, '1,')
+    test_text_obj_a(f(a,  {1, 2, 3} ,c), 5, '{1, 2, 3} ,')
+    test_text_obj_a(f(a,  (1, 2, 3) ,c), 5, '(1, 2, 3) ,')
+    test_text_obj_a(f(a,f'{b}',c), 4, f'{b}',)
+    test_text_obj_a(f(a,f'{b[my]}',c), 4, f'{b[my]}',)
+    test_text_obj_a(f(a, (f'{b}') if True else [1, 2, 3], c), 4, (f'{b}') if True else [1, 2, 3],)
+    test_text_obj_a(  a='[[,',b,c), 1, a='[[,',)
+    test_text_obj_a(  a='',b,c), 1, a='',)
+    test_text_obj_a(f(  foo(int(a),sqrt(b)),b,c), 1, foo(int(a),sqrt(b)),)
+    test_text_obj_a(f(a, [1, 2, ,c), 5, '')
+    test_text_obj_a({ 'b': 2, c: 4}, 5, 'b': 2,)
+    test_text_obj_a(    'b': 2, c: 4}, 0, 'b': 2,)
+key = val
+key=vaol
+ykey    key =  
+    test_text_obj_a(    'b': 2, c: 4}, 0, 'b': 2,)
+
+    key =  
+  key=val
+
+  key = vval  ,  
+  'key': val
+  "key   asdadas" : val
+  "key": val,
+  k='v'       
+  key=(cval, 1)
+
+  key=(val, 1), (xa, sa) 
+point = x, y
+ key = [1, a
+     2, 3], z = sdfsd
+
+arg = foo(a,    # Comment 
+        v=b   # Another
+        , 3), asdas
+arg = foo('asdasd, )', 3)
+
+var = foo # COmment     
+
+
+  key=dvict(
+        v=a) #asdasd
+
+
+        v=a)
+
+
+  {"a": {
+      'v': True,
+   k   }}
+  { 'lasda' : {
+      'v': True,
+      }}
+  {'a': {
+      'v': True,
+      }}
+  'a':{
+      'v': True,
+      }, 'v': False}
+
+foo = bar.ok.me('foo', 3, 2.3)
+foo.bar
+foo.bar(another(foo), 2)
+foo.bannr[n0].
+foo.bannr['some']
+foo.bnar['s '].an_ther(na, b)
+foo.bran({ fads : ['teswt', 3.0]})
+       foo.!b*ar!   <- van 
+       foo.!b*ar['some test']!   <- van 
+       foo.!b*ar['some test']!.another_call(a, b)   <- van 
+       foo.bar['some test'].!an*other_call(a, b)!   <- van
+       foo.*!zoo!.mock
+       var = 1  * !test!.foo
+           foo.array[!*0!]
+       foo.!arr*ay[0]!
+       var = key
+
