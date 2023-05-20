@@ -54,20 +54,13 @@ return {
     ["<ScrollWheelUp>"] = { '<C-Y>' },
     ["<ScrollWheelDown>"] = { '<C-E>' },
 
-    -- TODO: learn how to do without this stuff
-    --["<S-Up>"] = { "V<Up>", desc = 'Select up' },
-    --["<S-Down>"] = { "V<Down>", desc = 'Select down' },
-    -- ["<S-Left>"] = { "v<Left>", desc = 'Select left' },
-    -- ["<S-Right>"] = { "v<Right>", desc = 'Select right' },
-    -- ["<S-Home>"] = { "v^", desc = 'Select to a beginning' },
-    -- ["<S-End>"] = { "v$", desc = 'Select to an end' },
-
     -- Move lines of code
     ["<C-Up>"] = { "<cmd>m .-2<CR>==", desc = "Move line Up" },
     ["<C-Down>"] = { "<cmd>m .+1<CR>==", desc = "Move line Down" },
 
     -- My pycharm mimics
-    ["<C-q>"] = { vim.lsp.buf.signature_help, desc = 'Select right' },
+    -- ["<C-q>"] = false,
+    ["<C-q>"] = { function () require('lsp_signature').toggle_float_win() end, desc = 'Select right' },
     ["<C-d>"] = {
       function()
         local aerial_avail, _ = pcall(require, "aerial")
