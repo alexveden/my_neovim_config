@@ -204,6 +204,8 @@ end
 function argument_sub_a(line_text, col)
     local ch = ''
     local last_col = #line_text
+    local start_col = col
+    local args_col = -1
 
     local start_chars = {
         [','] = true, 
@@ -212,14 +214,32 @@ function argument_sub_a(line_text, col)
         ['{'] = true}
 
     while col > 0 do --: # Lua todo: change to > 0
+        -- Finding closest function call
         ch = line_text:sub(col, col)
-        if start_chars[ch] then
-            break
+        if args_col == -1 and start_chars[ch] then
+            args_col = col
         end
         col = col - 1
     end
+    if args_col == -1 then
+        -- No previous function call found, try to forward looking
+        col = start_col
+        while col <= last_col do
+            -- Finding closest function call
+            ch = line_text:sub(col, col)
+            if ch == '(' then
+                args_col = col
+                break
+            end
+            col = col + 1
+        end
+    end
+    if args_col == -1 then
+        -- Nothing found
+        return 0, 0
+    end
 
-    col = col + 1
+    col = args_col + 1
     while col < last_col do
         ch = line_text:sub(col, col)
         if ch ~= ' ' then
@@ -397,13 +417,13 @@ function argument_sub_i(line_text, col)
     local clean_text = line_text:sub(c_start, col)
     local sep = ''
     --
-    if clean_text:match("^'.*'%s*:%s*.*") then
-        sep = ':'
-    elseif clean_text:match('^".*"%s*:%s*.*') then
-        sep = ':'
-    elseif clean_text:match('^[%w_]+%s*=%s*.*') then
-        sep = '='
-    end
+    -- if clean_text:match("^'.*'%s*:%s*.*") then
+    --     sep = ':'
+    -- elseif clean_text:match('^".*"%s*:%s*.*') then
+    --     sep = ':'
+    -- elseif clean_text:match('^[%w_]+%s*=%s*.*') then
+    --     sep = '='
+    -- end
 
     if sep ~= "" then
         local i, _ = clean_text:find(sep)
@@ -463,6 +483,30 @@ function argument_a()
         vim.cmd('normal! l') -- Increase selection
         c_start = c_start + 1
     end
+end
+
+function argument_next()
+    local col = vim.fn.col('.')
+    local line = vim.fn.line('.')
+    local line_text = vim.fn.getline(line)
+
+
+    local c_start, c_end = argument_sub_a(line_text, col)
+    if c_end == 0 then
+        -- Error
+        return
+    end
+
+    if col >= c_start then
+        c_start, c_end = argument_sub_a(line_text, c_end)
+        if c_end == 0 then
+            -- Error
+            return
+        end
+    end
+
+    --
+    vim.fn.cursor(line, c_start)
 end
 
 function code_key(around)

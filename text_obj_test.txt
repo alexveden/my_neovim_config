@@ -3,8 +3,9 @@ test.ruvvan
 RestClassSnake
 test:
 UPPERlower
-MY_CONST
 _private_method
+ woer
+
  woer
 33
  fun(a, ba='sad but true'  , c)
@@ -25,7 +26,7 @@ foo(a,v,c)
               qm_ty__pe=QMType.intermarket,
               underlyi77ng=smartbeta_tickers['EQUITY_RU'])
     test_text_obj_a(f(a,b,c), 1, 'a,')
-    ,test_text_obj_a(f( a,b,c), 1, 'a,')
+    test_text_obj_a(f( a,b,c), 1, 'a,')
     test_text_obj_a(f(a,b,c), 2, 'a,')
     test_text_obj_a(f(a,b,c), 3, 'b,')
     test_text_obj_a(f(a,b,, 3, 'b,')
@@ -117,3 +118,4 @@ foo.bran({ fads : ['teswt', 3.0]})
        foo.!arr*ay[0]!
        var = key
 
+ woer

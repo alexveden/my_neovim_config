@@ -115,6 +115,10 @@ return {
     ['z3'] = { '<cmd>set foldlevel=3<CR>' },
     --['U'] = {'<Nop>'},
     --['O'] = {'<Nop>'},
+    ["&"] = {
+      "<esc><cmd>lua argument_next()<cr>",  -- see my text_objects.lua
+      desc = "Goto next argument",
+    },
 
   },
   t = {
