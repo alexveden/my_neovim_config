@@ -8,8 +8,9 @@ _private_method
 
  woer
 33
- fun(a, ba='sad but true'  , c)
+ fun(a_ar, kw_Ars_ba='sad but true'  , c)
  fun(a=c, z= 430, y=False)
+ fun(asome_ke=c_, z= 430, y=False)
  f(a,
    b,
    b= foo(ax, 3))

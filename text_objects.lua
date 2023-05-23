@@ -532,8 +532,16 @@ function code_key(around)
         sep = '='
         divisor = ' '
     else
-        -- Undecided
-        return
+        local col_current = vim.fn.col('.')
+
+        local c_start, c_end = argument_sub_a(line_text, col_current)
+        if c_end == 0 or line_text:sub(c_start, c_end):find('=') == nil then
+            -- Error
+            return
+        end
+        sep = '='
+        divisor = ' '
+        col = c_start
     end
 
     local ch = ''
@@ -580,8 +588,10 @@ end
 
 function code_value(around)
     --
-    -- Gets full line value, works with dictionaries(new line), and variables (new line)
-    --
+    -- Gets full line value, 
+    -- works with dictionaries(new line), 
+    -- variables (new line)
+    -- functions kwargs (at argument position)
     --
 
     local col = 1 --vim.fn.col('_')
@@ -590,27 +600,37 @@ function code_value(around)
     local line_last = vim.fn.line('$')
     local line_text = vim.fn.getline(line)
     local sep = ''
-    local divisor = ''
+    local is_argument = false
 
     if line_text:match("^%s*{?%s*'.*'%s*:%s*.*") then
-        divisor = "'"
         sep = ':'
     elseif line_text:match('^%s*{?%s*".*"%s*:%s*.*') then
         sep = ':'
-        divisor = '"'
     elseif line_text:match('^%s*[%w_]+%s*=%s*.*') then
         sep = '='
-        divisor = ' '
     else
-        -- Undecided
-        return
+        local col_current = vim.fn.col('.')
+
+        local c_start, c_end = argument_sub_a(line_text, col_current)
+        if c_end == 0 then
+            -- Error
+            return
+        end
+        sep = '='
+        col = c_start
+        col_last = c_end
+        if line_text:sub(c_end, c_end) == ',' then
+            col_last = col_last - 1
+        end
+        line_last = line
+        is_argument = true
     end
 
     local ch = ''
     local sep_found = false
     local char_found = false
     -- Find start of the key argument
-    while col < col_last do
+    while col <= col_last do
         ch = line_text:sub(col, col)
         if sep_found and ch ~= ' ' then
             char_found = true
@@ -627,7 +647,7 @@ function code_value(around)
         -- Empty value at all
         return
     end
-
+    
     vim.fn.cursor(line, col)
     vim.cmd('normal! v')
     local current_brackets = {} --   # Lua table, stack
@@ -636,7 +656,10 @@ function code_value(around)
 
     while line <= line_last do
         line_text = vim.fn.getline(line)
-        col_last = #line_text
+        if not is_argument then
+            col_last = #line_text
+        end
+
         while col <= col_last do
             ch = line_text:sub(col, col)
             match_brackets(current_brackets, ch)
@@ -657,7 +680,7 @@ function code_value(around)
         end
         -- print(vim.inspect(current_brackets))
 
-        if #current_brackets == 0 then 
+        if #current_brackets == 0 then
             break
         end
         is_multiline = true
