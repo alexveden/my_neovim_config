@@ -107,35 +107,62 @@ end
 
 function namepart(around)
     --
-    -- Text object for capturin snake_case_python_variables parts 
+    -- Text object for capturing partial variables
+    -- snake_case_python_*variables*
+    -- Class*Name*OrSomething
+    -- MY_*CONSTANT*
     --
     local col = vim.fn.col('.')
     local line = vim.fn.line('.')
     local line_text = vim.fn.getline(line)
     local col_start = col
 
+    -- By default: if we at upper case letter seek for lower case
+    local end_pat = "%l+"
+    local c = line_text:sub(col, col)
+    if c:match("%l+") or c:match("%d+")  then
+        -- if lower case letter seek for a first upper case
+        end_pat ="%u+"
+    end
+
     while col > 0 do
-        if not line_text:sub(col, col):match("%w+") then
+        c = line_text:sub(col, col)
+        if not c:match("%w+") then
+            -- Break at first non alphanumeric
+            break
+        end
+        if  c:match(end_pat) then
+            if end_pat == "%u+" then
+                col = col - 1
+            end
             break
         end
         col = col - 1
     end
 
-    col_start = col + 1
-    vim.fn.cursor(line, col_start)
+    col = col + 1
+    vim.fn.cursor(line, col)
     vim.cmd('normal! v')
+    vim.cmd('normal! l')
+    col = col + 1
+    col_start = col
     local last_col = vim.fn.col('$')
-    while col_start < last_col-1 do
-        -- print(line_text:sub(col_start, col_start))
-        if not line_text:sub(col_start, col_start):match("%w+") then
-            if not around or line_text:sub(col_start, col_start) ~= '_' then
+
+    while col < last_col-1 do
+        -- print(line_text:sub(col, col))
+        c = line_text:sub(col, col)
+        if (c:match(end_pat) and col-col_start == 0) then
+            -- Border case when cursor at the start of the Upper*Case part, and the next letter is lower
+            end_pat = "%u+"
+        elseif not c:match("%w+") or c:match(end_pat)  then
+            if not around or c ~= '_' then
                 vim.cmd('normal! h')
             end
             break
         end
         -- Increase selection
         vim.cmd('normal! l')
-        col_start = col_start + 1
+        col = col + 1
     end
 end
 
