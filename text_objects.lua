@@ -504,6 +504,14 @@ function argument_next()
             return
         end
     end
+    if col == c_start then
+        -- Already at the final position try to cycle
+        c_start, c_end = argument_sub_a(line_text, 1)
+        if c_end == 0 then
+            -- Error (possibly no functions)
+            return
+        end
+    end
 
     --
     vim.fn.cursor(line, c_start)

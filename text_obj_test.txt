@@ -87,10 +87,12 @@ var = foo # COmment
 
 
         v=a)
-{"k1": 2, "K3": 'value'}
+
+{"k1": 2, "K3": 'value' }
 value = func(arg, kw=some )
 self.value = func(arg, kw=some )
 self.value = True
+def my_funct(arg: Int, kwarg: Foo = 0)
 
   {"a": {
       'v': True,
