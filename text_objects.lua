@@ -255,7 +255,7 @@ function argument_sub_a(line_text, col)
     while col <= last_col do
         ch = line_text:sub(col, col)
         if match_brackets(current_brackets, ch) then
-            if ch == ',' or ch == ')' then
+            if ch == ',' or ch == ')' or ch == ']' or ch == '}' then
                 if ch == ',' then
                     col = col + 1
                 end
@@ -479,18 +479,19 @@ function argument_a()
     if ch ~= "," then
         -- possibly last argument, try to include previous comma
         c_start = c_start - 1
-        while c_start > 1 do
+        while c_start >= 1 do
             ch = line_text:sub(c_start, c_start)
             if ch == ' ' then
                 c_start = c_start - 1
             elseif ch == ',' then
                 break
             else
+                -- Unexpected char, possibly function bounds, revert back
+                c_start = c_start + 1
                 break
             end
         end
     end
-    -- print(c_start .. ' - ' .. c_end)
 
     vim.fn.cursor(line, c_start)
     vim.cmd('normal! v')

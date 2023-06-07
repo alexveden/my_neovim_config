@@ -18,9 +18,13 @@ fund(a, another(fund, 2), 2)
 fund(
     a=Test.ok,
     )
-f( )
+f()
+f(asd)
+[1]
+{ 1 }
 [1, 2, 3, 4, ]
 {1, 2, 3, }
+(1, 2, 3, )
 foo(a,v,c)
 
     self.save('mktMA',
@@ -79,7 +83,7 @@ point = x, y
 arg = foo(a,    # Comment 
         v=b   # Another
         , 3), asdas
-arg = foo('asdasd, )', 3)
+    arg = foo('asdasd, )', 3)
 
 var = foo # COmment     
 
@@ -90,10 +94,11 @@ var = foo # COmment
 
         v=a)
 
-  {  "k1" : 2, "K3": 'value' }
+   {  "k1" : 2, "K3": 'value' }
 
 {"k with space 1" : 2,    'K asdlkj 3': 'value' }
-dict(my=key, my_some_val=1)
+
+     dict(my=key, my_some_val=1)
 value = func(arg, kkw=some )
 self.value = func(arg, kw=some )
 self.value = True
