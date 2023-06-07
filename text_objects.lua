@@ -528,7 +528,7 @@ function code_key(around)
     elseif line_text:match('^%s*{?%s*".*"%s*:%s*.*') then
         sep = ':'
         divisor = '"'
-    elseif line_text:match('^%s*[%w_]+%s*=%s*.*') then
+    elseif line_text:match('^%s*[%w_.]+%s*=%s*.*') then
         sep = '='
         divisor = ' '
     else
@@ -606,7 +606,7 @@ function code_value(around)
         sep = ':'
     elseif line_text:match('^%s*{?%s*".*"%s*:%s*.*') then
         sep = ':'
-    elseif line_text:match('^%s*[%w_]+%s*=%s*.*') then
+    elseif line_text:match('^%s*[%w_.]+%s*=%s*.*') then
         sep = '='
     else
         local col_current = vim.fn.col('.')
