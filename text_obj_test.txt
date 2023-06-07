@@ -10,7 +10,7 @@ _private_method)
 33
  fun(a_ar, kw_Ars_ba='sad but true'  , c)
  fun(a=c, z= 430, y=False)
- fun(asome_ke=c_, z= 430, y=False)
+ fun(asome_ke=c_, z= 43, y=False) 
  f(a,
    b,
    b= foo(ax, 3))
@@ -19,6 +19,8 @@ fund(
     a=Test.ok,
     )
 f( )
+[1, 2, 3, 4, ]
+{1, 2, 3, }
 foo(a,v,c)
 
     self.save('mktMA',

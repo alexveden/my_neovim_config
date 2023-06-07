@@ -475,6 +475,22 @@ function argument_a()
         return
     end
 
+    local ch = line_text:sub(c_end, c_end)
+    if ch ~= "," then
+        -- possibly last argument, try to include previous comma
+        c_start = c_start - 1
+        while c_start > 1 do
+            ch = line_text:sub(c_start, c_start)
+            if ch == ' ' then
+                c_start = c_start - 1
+            elseif ch == ',' then
+                break
+            else
+                break
+            end
+        end
+    end
+    -- print(c_start .. ' - ' .. c_end)
 
     vim.fn.cursor(line, c_start)
     vim.cmd('normal! v')
@@ -555,7 +571,6 @@ function code_key(around)
             divisor = ' '
         elseif line_text:sub(c_start, c_end):find(':') ~= nil then
             sep = ':'
-
             -- One of literal argument of dict, e.g. {'k': val, "k2": valu2}
             if line_text:sub(c_start, c_end):match("%s*'.*'%s*:%s*.*") then
                 divisor = "'"
@@ -572,19 +587,6 @@ function code_key(around)
         col = c_start
         col_last = c_end
     end
-    --
-    -- else
-    --     local col_current = vim.fn.col('.')
-    --
-    --     local c_start, c_end = argument_sub_a(line_text, col_current)
-    --     if c_end == 0 or line_text:sub(c_start, c_end):find('=') == nil then
-    --         -- Error
-    --         return
-    --     end
-    --     sep = '='
-    --     divisor = ' '
-    --     col = c_start
-    -- end
 
     local ch = ''
     -- Find start of the key argument
