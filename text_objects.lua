@@ -530,34 +530,68 @@ function code_key(around)
     local sep = ''
     local divisor = ''
 
-    if line_text:match("^%s*{?%s*'.*'%s*:%s*.*") then
-        divisor = "'"
-        sep = ':'
-    elseif line_text:match('^%s*{?%s*".*"%s*:%s*.*') then
-        sep = ':'
-        divisor = '"'
-    elseif line_text:match('^%s*[%w_.]+%s*=%s*.*') then
-        sep = '='
-        divisor = ' '
-    else
-        local col_current = vim.fn.col('.')
+    local col_current = vim.fn.col('.')
+    local c_start, c_end = argument_sub_a(line_text, col_current)
 
-        local c_start, c_end = argument_sub_a(line_text, col_current)
-        if c_end == 0 or line_text:sub(c_start, c_end):find('=') == nil then
-            -- Error
+    if c_end == 0 or c_start > col_current then
+        -- Error argument not found, or it's out of current cursor scope
+        if line_text:match("^%s*{?%s*'.*'%s*:%s*.*") then
+            sep = ':'
+            divisor = "'"
+        elseif line_text:match('^%s*{?%s*".*"%s*:%s*.*') then
+            sep = ':'
+            divisor = '"'
+        elseif line_text:match('^%s*[%w_.]+%s*=%s*.*') then
+            sep = '='
+            divisor = ' '
+        else
+            -- not supported
             return
         end
-        sep = '='
-        divisor = ' '
+        c_start = 1
+    else
+        if line_text:sub(c_start, c_end):find('=') ~= nil then
+            sep = '='
+            divisor = ' '
+        elseif line_text:sub(c_start, c_end):find(':') ~= nil then
+            sep = ':'
+
+            -- One of literal argument of dict, e.g. {'k': val, "k2": valu2}
+            if line_text:sub(c_start, c_end):match("%s*'.*'%s*:%s*.*") then
+                divisor = "'"
+            elseif line_text:sub(c_start, c_end):match('%s*".*"%s*:%s*.*') then
+                divisor = '"'
+            else
+                -- Possible argument of type funct: def f(arg: float)
+                divisor = ':'
+            end
+        else
+            -- no valid separator found
+            return
+        end
         col = c_start
+        col_last = c_end
     end
+    --
+    -- else
+    --     local col_current = vim.fn.col('.')
+    --
+    --     local c_start, c_end = argument_sub_a(line_text, col_current)
+    --     if c_end == 0 or line_text:sub(c_start, c_end):find('=') == nil then
+    --         -- Error
+    --         return
+    --     end
+    --     sep = '='
+    --     divisor = ' '
+    --     col = c_start
+    -- end
 
     local ch = ''
     -- Find start of the key argument
     while col < col_last do
         ch = line_text:sub(col, col)
         if ch ~= ' ' and ch ~= '{' and ch ~= divisor then
-            if sep == ':' and around then
+            if divisor ~= ' ' and around then
                 col = col - 1
             end
             break
@@ -578,7 +612,13 @@ function code_key(around)
 
     if not around then
         col = col - 1
-        while col > 0 do
+        if sep == divisor then
+            -- Border case of typed func def 
+            vim.cmd('normal! h') -- Shrink selection
+            return
+        end
+        -- trim dict "" / or whitespaces before =
+        while col > c_start do
             ch = line_text:sub(col, col)
             if (sep == '=' and ch ~= ' ') or (sep == ':' and ch == divisor) then
                 vim.cmd('normal! h') -- Shrink selection
@@ -610,21 +650,29 @@ function code_value(around)
     local sep = ''
     local is_argument = false
 
-    if line_text:match("^%s*{?%s*'.*'%s*:%s*.*") then
-        sep = ':'
-    elseif line_text:match('^%s*{?%s*".*"%s*:%s*.*') then
-        sep = ':'
-    elseif line_text:match('^%s*[%w_.]+%s*=%s*.*') then
-        sep = '='
-    else
-        local col_current = vim.fn.col('.')
-
-        local c_start, c_end = argument_sub_a(line_text, col_current)
-        if c_end == 0 then
-            -- Error
+    local col_current = vim.fn.col('.')
+    local c_start, c_end = argument_sub_a(line_text, col_current)
+    if c_end == 0 or c_start > col_current then
+        -- Error argument not found, or it's out of current cursor scope
+        if line_text:match("^%s*{?%s*'.*'%s*:%s*.*") then
+            sep = ':'
+        elseif line_text:match('^%s*{?%s*".*"%s*:%s*.*') then
+            sep = ':'
+        elseif line_text:match('^%s*[%w_.]+%s*=%s*.*') then
+            sep = '='
+        else
+            -- not supported
             return
         end
-        sep = '='
+    else
+        if line_text:sub(c_start, c_end):find('=') ~= nil then
+            sep = '='
+        elseif line_text:sub(c_start, c_end):find(':') ~= nil then
+            sep = ':'
+        else
+            -- no valid separator found
+            return
+        end
         col = c_start
         col_last = c_end
         if line_text:sub(c_end, c_end) == ',' then
