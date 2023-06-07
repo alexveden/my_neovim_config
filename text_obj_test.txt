@@ -1,9 +1,9 @@
 test_variable_okkk =  
 test.ruvvan
-RestClassSnake
+RestClassSnake)
 test:
-UPPERlower
-_private_method
+UPPERlower()
+_private_method) 
  woer
 
  woer
@@ -96,6 +96,11 @@ value = func(arg, kkw=some )
 self.value = func(arg, kw=some )
 self.value = True
 def my_funct(vargument_one: Int, kwarg: Foo = 0)
+myname_delete)
+myname_delete')
+myname_delete")
+myname_delete]
+myname_delete}
 
   {"a": {
       'v': True,

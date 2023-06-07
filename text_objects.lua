@@ -148,7 +148,7 @@ function namepart(around)
     col_start = col
     local last_col = vim.fn.col('$')
 
-    while col < last_col-1 do
+    while col <= last_col-1 do
         -- print(line_text:sub(col, col))
         c = line_text:sub(col, col)
         if (c:match(end_pat) and col-col_start == 0) then
