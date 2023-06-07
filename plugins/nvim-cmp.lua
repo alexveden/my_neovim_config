@@ -36,7 +36,22 @@ return {
                     "i",
                     "s",
                 })
-
+        opts.mapping['<Down>'] = cmp.mapping(function(fallback)
+                if cmp.visible() then
+                    cmp.select_next_item()
+                else
+                    fallback()
+                end
+            end
+            , {"i", "c"})
+        opts.mapping['<Up>'] = cmp.mapping(function(fallback)
+                if cmp.visible() then
+                    cmp.select_prev_item()
+                else
+                    fallback()
+                end
+            end
+            , {"i", "c"})
 
         opts.sorting = {
                 priority_weight = 1.0,
