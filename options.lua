@@ -12,6 +12,9 @@ return {
     expandtab = true,      -- Convert tab to spaces
     smarttab = true,
     guicursor = "i-ci:ver30-iCursor-blinkwait300-blinkon200-blinkoff150",
+    foldmethod = "expr",
+    foldexpr = "nvim_treesitter#foldexpr()",
+    foldlevelstart = 1,
   },
   g = {
     mapleader = " ",                 -- sets vim.g.mapleader

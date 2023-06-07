@@ -1,7 +1,7 @@
 return {
     {
         'anuvyklack/pretty-fold.nvim',
-        lazy = false,
+        lazy = true,
         enabled = true,
         config = function(_, _)
             require('pretty-fold').setup({
