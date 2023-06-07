@@ -12,7 +12,7 @@ _private_method)
  fun(a=c, z= 430, y=False)
  fun(asome_ke=c_, z= 43, y=False) 
  f(a,
-   b,
+   b, as, 
    b= foo(ax, 3))
 fund(a, another(fund, 2), 2)
 fund(
@@ -22,9 +22,10 @@ f()
 f(asd)
 [1]
 { 1 }
-[1, 2, 3, 4, ]
-{1, 2, 3, }
-(1, 2, 3, )
+  [1, 2, 3, 4, ]
+
+  {1, 2, 3, }
+  (1, 2, 3, )
 foo(a,v,c)
 
     self.save('mktMA',

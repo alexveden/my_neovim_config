@@ -208,9 +208,9 @@ function argument_sub_a(line_text, col)
     local args_col = -1
 
     local start_chars = {
-        [','] = true, 
-        ['('] = true, 
-        ['['] = true, 
+        [','] = true,
+        ['('] = true,
+        ['['] = true,
         ['{'] = true}
 
     while col > 0 do --: # Lua todo: change to > 0
@@ -227,7 +227,7 @@ function argument_sub_a(line_text, col)
         while col <= last_col do
             -- Finding closest function call
             ch = line_text:sub(col, col)
-            if ch == '(' then
+            if start_chars[ch] then
                 args_col = col
                 break
             end
@@ -249,7 +249,7 @@ function argument_sub_a(line_text, col)
     end
 
     local current_brackets = {} --   # Lua table, stack
-    local start_col = col
+    start_col = col
 
 
     while col <= last_col do
