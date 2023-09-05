@@ -25,8 +25,8 @@ return {
     ["<leader>bo"] = { '<cmd>%bd|e#|bd#<cr><cr>', desc = "Close other tabs" },
     -- ["<leader>bu"] = { '<cmd>MundoToggle<cr>', desc = "Buffer undo tree" },
     ["<leader>bu"] = { '<cmd>Telescope undo<cr>', desc = "Buffer undo tree" },
-    ["<leader>lc"] = { '<cmd>call Autoflake()<cr>', desc = "Clean PyImports" },
-    ["<leader>lp"] = { '<cmd>DocstringTypes<cr>', desc = 'PyDocString Gen' },
+    -- ["<leader>lc"] = { '<cmd>call Autoflake()<cr>', desc = "Clean PyImports" },
+    ["<leader>lp"] = { '<cmd>Docstring<cr>', desc = 'PyDocString Gen' },
     -- ["<leader>sm"] = { function() require("telescope.builtin").man_pages({ sections = { "ALL" } }) end, desc = "Search man" },
     -- Disable Force close buffer! No save, no undo history!
     ["<leader>C"] = false,

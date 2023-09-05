@@ -15,6 +15,7 @@ return {
     foldmethod = "expr",
     foldexpr = "nvim_treesitter#foldexpr()",
     foldlevelstart = 1,
+    colorcolumn = "89",
   },
   g = {
     mapleader = " ",                 -- sets vim.g.mapleader

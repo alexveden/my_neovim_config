@@ -3,6 +3,7 @@ return {
         'anuvyklack/pretty-fold.nvim',
         lazy = true,
         enabled = true,
+        event = "BufEnter", 
         config = function(_, _)
             require('pretty-fold').setup({
                 ft_ignore = { 'python' },
