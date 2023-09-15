@@ -51,6 +51,23 @@ return {
     -- enable servers that you already have installed without mason
     servers = {
       -- "pyright"
+      "lua_ls",
+    },
+    config = {
+      lua_ls = {
+        settings = {
+          Lua = {
+            workspace = {
+              -- runtime = {
+              --   "/usr/local/share/lua/5.3/?.lua",
+              -- },
+              library = {
+                "/usr/local/share/lua/5.3",
+              },
+            },
+          },
+        },
+      },
     },
   },
 
@@ -74,10 +91,8 @@ return {
 
     -- Folded text highlighting
     vim.api.nvim_exec("hi Folded guifg=#ffffff", true)
-    
-    
 
     -- Installing basic text objectss + key bindings!
-    require('user.text_objects').map_text_objects()
+    require("user.text_objects").map_text_objects()
   end,
 }
