@@ -127,7 +127,7 @@ foo = bar.ok.me('foo', 3, 2.3)
 foo.bar
 foo.bar(another(foo), 2)
 foo.bannr[n0].
-foo.bannr['some']
+foo.bannr['some'] = 'my string'
 foo.bnar['s '].an_ther(na, b)
 foo.bran({ fads : ['teswt', 3.0]})
        foo.!b*ar!   <- van 
