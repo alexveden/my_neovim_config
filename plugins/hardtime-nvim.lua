@@ -8,8 +8,8 @@ return {
     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
     config = function()
       local opts = {
-        max_time = 1000,
-        max_count = 3,
+        max_time = 500,
+        max_count = 2,
         disable_mouse = false,
         hint = true,
         notification = true,

@@ -16,8 +16,6 @@ return {
         mappings = {
           -- I want `n` to always go forward, and `<s-n>` to always go backwards
           -- ["#"] = { previous = "n", next = "<s-n>" },
-          -- ["F"] = { previous = ";", next = "," },
-          -- ["T"] = { previous = ";", next = "," },
           --
           -- -- Setting `cmdline = true` ensures that `n` will only be
           -- -- overwritten if the search command is succesfully executed
@@ -28,9 +26,15 @@ return {
           -- ["t"] = {previous = ",", next = ";"},
           -- ["F"] = {previous = ",", next = ";"},
           -- ["T"] = {previous = ",", next = ";"},
+          ["f"] = {cmdline = true},
+          ["t"] = {cmdline = true},
+          ["F"] = {cmdline = true},
+          ["T"] = {cmdline = true},
           --
           ["/"] = {previous = "<s-n>", next = "n", cmdline = true},
           ["?"] = {previous = "<s-n>", next = "n", cmdline = true},
+          -- ["/"] = {cmdline = true},
+          -- ["?"] = {cmdline = true},
 
           -- spell
           ["]s"] = {previous = "[s", next = "]s"},
@@ -44,6 +48,9 @@ return {
           -- git hunk
           ["]g"] = {previous = "[g", next = "]g"},
           ["[g"] = {previous = "[g", next = "]g"},
+          -- next fold
+          -- ["z<Up>"] = {previous = "zk", next = "zj"},
+          -- ["z<Down>"] = {previous = "zk", next = "zj"},
         },
       }
 

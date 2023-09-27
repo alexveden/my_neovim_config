@@ -9,8 +9,9 @@ return {
     -- mappings seen under group name "Buffer"
     ["<Home>"] = { "^", desc = 'Jump to first non-blank char' },
     ["<End>"] = { "g_", desc = 'Jump to last non-blank char' },
-    ["<C-PageUp>"] = { "<C-u>", desc = "PageUp center" },
-    ["<C-PageDown>"] = { "<C-d>", desc = "PageDown center" },
+    -- C-PageUp / C-PageDown -- remapped to fold jumps
+    -- ["<C-PageUp>"] = { "<C-u>zz", desc = "PageUp center" },
+    -- ["<C-PageDown>"] = { "<C-d>zz", desc = "PageDown center" },
     ["<PageUp>"] = { "10k", desc = "Jump 5 up" },
     ["<PageDown>"] = { "10j", desc = "Jump 5 down" },
     -- ["<PageUp>"] = { "<C-u>zz", desc = "PageUp center" },
@@ -108,10 +109,15 @@ return {
     ['zm'] = { 'zmzz' },
 
     -- FOLDING shortcut
+    ['zz'] = { 'z<CR>zo' },
     ['z`'] = { '<cmd>set foldlevel=0<CR>' },
     ['z1'] = { '<cmd>set foldlevel=1<CR>' },
     ['z2'] = { '<cmd>set foldlevel=2<CR>' },
     ['z3'] = { '<cmd>set foldlevel=3<CR>' },
+    ["<C-PageUp>"] = { "zk", desc = "Prev fold up" },
+    ["<C-PageDown>"] = { "zj", desc = "Next fold down" },
+    -- ["z<Up>"] = { "zk", desc = 'Prev fold up' },
+    -- ["z<Down>"] = { "zj", desc = 'Next fold down' },
     --['U'] = {'<Nop>'},
     --['O'] = {'<Nop>'},
     ["&"] = {

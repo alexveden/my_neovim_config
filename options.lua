@@ -16,7 +16,7 @@ return {
     guicursor = "i-ci:ver30-iCursor-blinkwait300-blinkon200-blinkoff150",
     foldmethod = "expr",
     foldexpr = "nvim_treesitter#foldexpr()",
-    foldlevelstart = 1,
+    foldlevelstart = 99,
     colorcolumn = "89",
   },
   g = {
