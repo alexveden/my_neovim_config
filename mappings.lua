@@ -34,8 +34,10 @@ return {
 
     -- quick save
     ["<C-s>"] = { ":w!<cr>", desc = "Save File" }, -- change description but the same command
-    ["<C-Right>"] = { "<cmd>bnext<cr>", desc = "Next buffer" },
-    ["<C-Left>"] = { "<cmd>bprev<cr>", desc = "Prev buffer" },
+    -- ["<C-Right>"] = { "<cmd>bnext<cr>", desc = "Next buffer" },
+    -- ["<C-Left>"] = { "<cmd>bprev<cr>", desc = "Prev buffer" },
+    ["<C-Right>"] = { function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end, desc = "Next buffer" },
+    ["<C-Left>"] = { function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end, desc = "Previous buffer" },
 
     -- Shift + Arrow selection (+ seamless TMUX panes!)
     -- ["<S-Up>"] = { "<C-W>k", desc = 'Split move up' },
