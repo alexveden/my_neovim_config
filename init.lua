@@ -54,6 +54,12 @@ return {
       "lua_ls",
     },
     config = {
+      ltex = {
+        -- ltex-ls LSP server for Markdown and latex for spelling
+        -- settings params: https://valentjn.github.io/ltex/settings.html
+          enabled = true,
+
+      },
       lua_ls = {
         settings = {
           Lua = {

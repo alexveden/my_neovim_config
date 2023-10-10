@@ -88,10 +88,10 @@ return {
     --Code idents single line
     ["<Tab>"] = { ">>", desc = "Indent left" },
     ["<S-Tab>"] = { "<<", desc = "Indent right" }, -- Shift + Arrow selection
-    ['<leader>zr'] = { ":.,$s/<C-R><C-W>/<C-R><C-W>/gc<Left><Left><Left>", desc = 'Replace current word' },
-    ['<leader>zf'] = { "/<C-R><C-W><CR>", desc = 'Find current word' },
-    ['<leader>zz'] = { "zfif", desc = 'Fold current fuction' },
-    ['<leader>zp'] = { "`[v`]", desc = 'Select pasted text' },
+    ['<leader>jr'] = { ":.,$s/<C-R><C-W>/<C-R><C-W>/gc<Left><Left><Left>", desc = 'Replace current word' },
+    ['<leader>jf'] = { ':lua require("user.text_objects").f_string_prepend()<CR>', desc = 'Adds f- prefix into string beginning' },
+    ['<leader>jz'] = { "zfif", desc = 'Fold current fuction' },
+    ['<leader>jp'] = { "`[v`]", desc = 'Select pasted text' },
 
     -- TODO Search
     ['<leader>ft'] = { ":TodoTelescope keywords=TODO,FIX,BUG,FIXME<CR>", desc = 'Find TODOs' },

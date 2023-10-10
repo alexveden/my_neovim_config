@@ -803,6 +803,24 @@ function code_string(is_inner)
   vim.fn.cursor(line, i_end)
 end
 
+function f_string_prepend()
+  local line = vim.fn.line "."
+  local line_text = vim.fn.getline(line)
+  local col_current = vim.fn.col "."
+  local i_start, i_end = match_string(line_text, col_current, false)
+
+  if not i_start or not i_end then return end
+
+  local offset = 0
+  if col_current >= i_start and col_current <= i_end then
+     offset = 1
+  end
+
+  vim.fn.cursor(line, i_start)
+  vim.cmd "normal! if"
+  vim.fn.cursor(line, col_current + offset)
+end
+
 function map_text_objects()
   for _, mode in ipairs { "x", "o" } do
     vim.api.nvim_set_keymap(mode, "ae", ":<c-u>lua empty_a()<cr>", { noremap = true, silent = true })
@@ -825,6 +843,9 @@ function map_text_objects()
     -- Getting closes strint (including f-strings)
     vim.api.nvim_set_keymap(mode, "is", ":<c-u>lua code_string(true)<cr>", { noremap = true, silent = true })
     vim.api.nvim_set_keymap(mode, "as", ":<c-u>lua code_string(false)<cr>", { noremap = true, silent = true })
+
+    -- insert f- before string
+    -- vim.api.nvim_set_keymap(mode, "if", ":<c-u>lua f_string()<cr>", { noremap = true, silent = true })
   end
   -- local chars = { '_', '.', ':', ',', ';', '|', '/', '\\', '*', '+', '%', '`', '?' }
   -- for _,char in ipairs(chars) do
@@ -837,4 +858,5 @@ end
 
 return {
   map_text_objects = map_text_objects,
+  f_string_prepend = f_string_prepend,
 }
