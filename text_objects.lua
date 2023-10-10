@@ -768,12 +768,19 @@ function match_string(s, cursor_position, is_inner)
         table.remove(quotes_stack, 1)
         last_q = i
         cur_distance = math.abs(i - cursor_position)
+      elseif #quotes_stack == 2 and quotes_stack[2][1] == ch then
+          -- special case with mixed strings "Let's do it!"
+        table.remove(quotes_stack, 1)
+        table.remove(quotes_stack, 1)
+        last_q = i
+        cur_distance = math.abs(i - cursor_position)
       else
         table.insert(quotes_stack, 1, { ch, i })
       end
     end
     prev_ch = ch
   end
+
   if first_q and last_q then
     if is_inner then
       return first_q + 1, last_q - 1

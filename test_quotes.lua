@@ -9,7 +9,9 @@ local strings = {
     [["|world]],
     [["wor|ld"]],
     [["world|"]],
-    [["world"|]],
+    [[              "world"                |]],
+    [[              "wor|ld"]],
+    [[  |              "world's inner quote"]],
     [[hello "world"|]],  -- world
     [[h|ello "world"]],  -- world
     [[|print('hello'), f("world")]], -- hello
