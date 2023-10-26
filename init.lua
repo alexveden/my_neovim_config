@@ -52,13 +52,31 @@ return {
     servers = {
       -- "pyright"
       "lua_ls",
+      "cyright",
     },
     config = {
+      cyright = {
+        cmd = {
+          "node",
+          "/home/ubertrader/cloud/code/vs-code-cython/cyright/packages/pyright/langserver.index.js",
+          "--stdio",
+        },
+        -- cmd = { 'pyright-langserver', '--stdio' },
+        filetypes = { "pyrex" },
+        root_dir = function(fname)
+          -- print("cyright: " .. fname)
+          local _root = require("lspconfig").util.find_git_ancestor(fname)
+          vim.lsp.set_log_level 'trace'
+          -- print("root: " .. _root)
+          return _root
+        end,
+        -- root_dir = function(fname) assert(false) end,
+        settings = {},
+      },
       ltex = {
         -- ltex-ls LSP server for Markdown and latex for spelling
         -- settings params: https://valentjn.github.io/ltex/settings.html
-          enabled = true,
-
+        enabled = true,
       },
       lua_ls = {
         settings = {

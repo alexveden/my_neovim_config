@@ -92,6 +92,7 @@ return {
     ['<leader>jf'] = { ':lua require("user.text_objects").f_string_prepend()<CR>', desc = 'Adds f- prefix into string beginning' },
     ['<leader>jz'] = { "zfif", desc = 'Fold current fuction' },
     ['<leader>jp'] = { "`[v`]", desc = 'Select pasted text' },
+    ['<leader>jd'] = { ":lua require('neogen').generate()<CR>", desc = 'Generates docstrind' },
 
     -- TODO Search
     ['<leader>ft'] = { ":TodoTelescope keywords=TODO,FIX,BUG,FIXME<CR>", desc = 'Find TODOs' },

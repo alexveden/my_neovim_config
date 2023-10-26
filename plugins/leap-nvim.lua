@@ -12,17 +12,18 @@ return {
     config = function()
       -- require("leap").leap { target_windows = { vim.fn.win_getid() } }
       local leap = require "leap"
-      leap.opts.safe_labels = {}
+      -- leap.opts.safe_labels = {}
       leap.opts.highlight_unlabeled_phase_one_targets = true
       leap.opts.substitute_chars = {
         [" "] = "␣",
         ['\r'] = '¬',
       }
       leap.opts.equivalence_classes = {
-        " \t\r\n",
+        " \t\r\n[]{}<>'\"`",
+        -- " \t\r\n",
         --'[{(<',
         --']})>',
-        { '"', "'", "`" },
+        -- { '"', "'", "`" },
       }
       -- Small fix of no highlight of first selection by leap
       vim.api.nvim_exec("hi Cursor guifg=#282c34 guibg=#e5c07b", true)
