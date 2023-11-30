@@ -107,12 +107,12 @@ return {
     ['<C-h>'] = { '<Nop>' },
     ['<C-y>'] = { '<Nop>' },
     ['G'] = { 'Gzz' },
-    ['za'] = { 'zazz' },
-    ['zc'] = { 'zczz' },
+    ['za'] = { 'zAzz' },
+    ['zc'] = { 'zCzz' },
     ['zm'] = { 'zmzz' },
 
     -- FOLDING shortcut
-    ['zz'] = { 'z<CR>zo' },
+    ['zz'] = { 'zAz.' },
     ['z`'] = { '<cmd>set foldlevel=0<CR>' },
     ['z1'] = { '<cmd>set foldlevel=1<CR>' },
     ['z2'] = { '<cmd>set foldlevel=2<CR>' },
@@ -127,6 +127,14 @@ return {
       "<esc><cmd>lua argument_next()<cr>",  -- see my text_objects.lua
       desc = "Goto next argument",
     },
+    -- Debugger
+    --
+  -- ["<F6>"] = { function() require("dap").pause() end, desc = "Debugger: Pause" }
+  ["<F6>"] = { function() require("dap").step_over() end, desc = "Debugger: Step Over" },
+  ["<F7>"] = { function() require("dap").step_into() end, desc = "Debugger: Step Into" },
+  ["<leader>du"] = { function() require("dap").up() end, desc = "Debugger: Stack Up" },
+  ["<leader>dd"] = { function() require("dap").down() end, desc = "Debugger: Stack Down" },
+  ["<leader>dD"] = { function() require("dapui").toggle() end, desc = "Toggle Debugger UI" }
 
   },
   t = {
