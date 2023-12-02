@@ -1,7 +1,8 @@
 return {
   {
     -- "anuvyklack/pretty-fold.nvim",
-    dir="/home/ubertrader/cloud/code/pretty-fold.nvim",
+    "alexveden/pretty-fold.nvim",
+    -- dir="/home/ubertrader/cloud/code/pretty-fold.nvim",
     lazy = true,
     enabled = true,
     event = "BufEnter",
