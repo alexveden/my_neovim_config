@@ -1,7 +1,10 @@
 return {
     {
         "ray-x/lsp_signature.nvim",
+        --
+        -- enabled = false,
         event = "BufRead",
+        tag = "v0.2.0",
         config = function(_, _)
             require("lsp_signature").setup({
                 bind = true,
