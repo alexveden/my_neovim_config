@@ -3,7 +3,7 @@ return {
     { "kevinhwang91/nvim-ufo", enabled = false },
     {
         enabled = true,
-        dir = '/home/ubertrader/cloud/code/nvim-treesitter-pyfold',
+        dir = '/home/ubertrader/code/nvim-treesitter-pyfold',
         -- 'eddiebergman/nvim-treesitter-pyfold',
         --
         event = "BufEnter *.py,*.pyx,*.pxd",
