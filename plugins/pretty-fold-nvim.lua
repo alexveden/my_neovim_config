@@ -8,11 +8,6 @@ return {
     event = "BufEnter",
     config = function(_, _)
       -- Saving folds!
-      --augroup remember_folds
-      --   autocmd!
-      --   autocmd BufWinLeave * mkview
-      --   autocmd BufWinEnter * silent! loadview
-      -- augroup END
       local save_fold_group = vim.api.nvim_create_augroup("save_fold_group", { clear = true })
       vim.api.nvim_create_autocmd({ "BufWinLeave" }, {
         pattern = "*.*",
@@ -24,7 +19,41 @@ return {
         group = save_fold_group,
         command = "silent! loadview",
       })
+
       --
+      -- Customize language folds
+      --
+      --
+      vim.treesitter.query.set(
+        "c",
+        "folds",
+        [[
+          [
+           (switch_statement)
+           (case_statement)
+           (comment)
+          ] @fold
+          (function_definition
+            type: (type_identifier)  @fold
+          )
+          (function_definition
+            body: (compound_statement)  @fold
+          )
+          ]]
+      )
+
+      vim.treesitter.query.set(
+        "cpp",
+        "folds",
+        [[
+          [
+           (switch_statement)
+           (case_statement)
+           (comment)
+           (function_definition)
+          ] @fold
+          ]]
+      )
 
       require("pretty-fold").setup {
         ft_ignore = { "python" },
@@ -33,6 +62,8 @@ return {
         -- List of patterns that will be removed from content foldtext section.
         -- process_comment_signs = "delete",
         process_comment_signs = false,
+        add_close_pattern = true, -- true, 'last_line' or false
+        --add_close_pattern = 'last_line',
         comment_signs = {
           "/**", -- C++ Doxygen comments
         },
