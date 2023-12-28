@@ -29,7 +29,6 @@ return {
         "folds",
         [[
           [
-           (switch_statement)
            (case_statement)
            (comment)
           ] @fold

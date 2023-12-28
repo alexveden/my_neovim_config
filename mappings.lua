@@ -107,12 +107,12 @@ return {
     ['<C-h>'] = { '<Nop>' },
     ['<C-y>'] = { '<Nop>' },
     ['G'] = { 'Gzz' },
-    ['za'] = { 'zAzz' },
-    ['zc'] = { 'zCzz' },
+    ['za'] = { 'zazz' },
+    ['zc'] = { 'zczz' },
     ['zm'] = { 'zmzz' },
 
     -- FOLDING shortcut
-    ['zz'] = { 'zAz.' },
+    ['zz'] = { 'zazz' },
     ['z`'] = { '<cmd>set foldlevel=0<CR>' },
     ['z1'] = { '<cmd>set foldlevel=1<CR>' },
     ['z2'] = { '<cmd>set foldlevel=2<CR>' },
