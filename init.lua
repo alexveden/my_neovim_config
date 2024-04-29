@@ -66,7 +66,7 @@ return {
         root_dir = function(fname)
           -- print("cyright: " .. fname)
           local _root = require("lspconfig").util.find_git_ancestor(fname)
-          vim.lsp.set_log_level 'trace'
+          vim.lsp.set_log_level "trace"
           -- print("root: " .. _root)
           return _root
         end,
@@ -118,5 +118,27 @@ return {
 
     -- Installing basic text objectss + key bindings!
     require("user.text_objects").map_text_objects()
+
+    local function escape(str)
+      -- You need to escape these characters to work correctly
+      local escape_chars = [[;,."|\]]
+      return vim.fn.escape(str, escape_chars)
+    end
+
+    -- Recommended to use lua template string
+    local en = [[`qwertyuiop[]asdfghjkl;'zxcvbnm]]
+    local ru = [[ёйцукенгшщзхъфывапролджэячсмить]]
+    local en_shift = [[~QWERTYUIOP{}ASDFGHJKL:"ZXCVBNM<>]]
+    local ru_shift = [[ËЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ]]
+
+    vim.opt.langmap = vim.fn.join({
+      -- | `to` should be first     | `from` should be second
+      escape(ru_shift)
+        .. ";"
+        .. escape(en_shift),
+      escape(ru) .. ";" .. escape(en),
+    }, ",")
+
+    -- require('langmapper').automapping({ global = true, buffer = true })
   end,
 }

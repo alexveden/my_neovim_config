@@ -2,7 +2,7 @@ return {
   {
     "jonatan-branting/nvim-better-n",
     lazy = true,
-    enabled = true,
+    enabled = false,
     event = "BufEnter",
     config = function()
       require("better-n").setup {
