@@ -52,31 +52,13 @@ return {
     servers = {
       -- "pyright"
       "lua_ls",
-      "cyright",
     },
     config = {
-      cyright = {
-        cmd = {
-          "node",
-          "/home/ubertrader/cloud/code/vs-code-cython/cyright/packages/pyright/langserver.index.js",
-          "--stdio",
-        },
-        -- cmd = { 'pyright-langserver', '--stdio' },
-        filetypes = { "pyrex" },
-        root_dir = function(fname)
-          -- print("cyright: " .. fname)
-          local _root = require("lspconfig").util.find_git_ancestor(fname)
-          vim.lsp.set_log_level "trace"
-          -- print("root: " .. _root)
-          return _root
-        end,
-        -- root_dir = function(fname) assert(false) end,
-        settings = {},
-      },
       ltex = {
         -- ltex-ls LSP server for Markdown and latex for spelling
         -- settings params: https://valentjn.github.io/ltex/settings.html
         enabled = true,
+        language = "ru-RU",
       },
       lua_ls = {
         settings = {
@@ -139,6 +121,63 @@ return {
       escape(ru) .. ";" .. escape(en),
     }, ",")
 
-    -- require('langmapper').automapping({ global = true, buffer = true })
+    --
+    -- Special settings for code-related stuff
+    --
+    vim.api.nvim_create_augroup("Code", { clear = true })
+    vim.api.nvim_create_autocmd("BufEnter", {
+      callback = function()
+        if vim.bo.filetype == "markdown" then return end
+        -- Motions as by pythonCamelCase_some_snake_case
+        vim.keymap.set({ "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>", { desc = "Spider-w" })
+        vim.keymap.set({ "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>", { desc = "Spider-e" })
+        vim.keymap.set({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc = "Spider-b" })
+        vim.keymap.set({ "n", "o", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>", { desc = "Spider-ge" })
+
+        -- Special zem mode with twilight off
+        vim.keymap.set(
+          "n",
+          "<leader>jj",
+          function() require("zen-mode").toggle { plugins = { twilight = { enabled = false } } } end,
+          { desc = "ZenMode twilight" }
+        )
+        -- markdown preview
+        -- vim.keymap.del({ "n", "o", "x" }, "<leader>jm", {silent = true})
+      end,
+      group = "Code",
+    })
+
+    --
+    -- Special settings for Markdown
+    --
+    vim.api.nvim_create_augroup("Markdown", { clear = true })
+    vim.api.nvim_create_autocmd("BufEnter", {
+      callback = function()
+        if vim.bo.filetype ~= "markdown" then return end
+
+        -- Reset default w-e-b keys behavior
+        vim.keymap.del({ "n", "o", "x" }, "w")
+        vim.keymap.del({ "n", "o", "x" }, "e")
+        vim.keymap.del({ "n", "o", "x" }, "b")
+        vim.keymap.del({ "n", "o", "x" }, "ge")
+
+        -- Soft wrap in zen mode
+        vim.g["pencil#wrapModeDefault"] = "soft"
+        -- vim.g["pencil#conceallevel "] = 1
+        vim.cmd "let g:pencil#conceallevel = 0"
+        vim.cmd "SoftPencil" -- enable soft wrapping handling
+
+        vim.keymap.set(
+          "n",
+          "<leader>jj",
+          function() require("zen-mode").toggle { plugins = { twilight = { enabled = true } } } end,
+          { desc = "ZenMode twilight" }
+        )
+        vim.keymap.set("n", "<leader>jm", function()
+          vim.cmd "MarkdownPreview"
+        end, { desc = "Markdown Preview" })
+      end,
+      group = "Markdown",
+    })
   end,
 }
