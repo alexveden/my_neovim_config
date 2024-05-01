@@ -165,7 +165,7 @@ return {
         vim.g["pencil#wrapModeDefault"] = "soft"
         -- vim.g["pencil#conceallevel "] = 1
         vim.cmd "let g:pencil#conceallevel = 0"
-        vim.cmd "SoftPencil" -- enable soft wrapping handling
+        vim.cmd "SoftPencil" 
 
         vim.keymap.set(
           "n",
@@ -173,9 +173,7 @@ return {
           function() require("zen-mode").toggle { plugins = { twilight = { enabled = true } } } end,
           { desc = "ZenMode twilight" }
         )
-        vim.keymap.set("n", "<leader>jm", function()
-          vim.cmd "MarkdownPreview"
-        end, { desc = "Markdown Preview" })
+        vim.keymap.set("n", "<leader>jm", function() vim.cmd "MarkdownPreview" end, { desc = "Markdown Preview" })
       end,
       group = "Markdown",
     })
